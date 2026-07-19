@@ -1,0 +1,61 @@
+name: MuleHazardMap
+options:
+  bundleIdPrefix: com.mulehazardmap
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  MuleHazardMap:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: App
+      - path: Models
+      - path: Services
+      - path: Views
+    resources:
+      - path: Resources/Assets.xcassets
+      - path: Resources/LaunchScreen.storyboard
+    configFiles:
+      Debug: Config/Config.xcconfig
+      Release: Config/Config.xcconfig
+    info:
+      path: Config/Info.plist
+      properties:
+        CFBundleDisplayName: Mule Hazard Map
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchStoryboardName: LaunchScreen
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        ITSAppUsesNonExemptEncryption: false
+        MHM_API_BASE_URL: $(MHM_API_BASE_URL)
+        GOONG_API_KEY: $(GOONG_API_KEY)
+        NSLocationWhenInUseUsageDescription: Ứng dụng cần vị trí để hiển thị bạn trên bản đồ và tạo checkin.
+        NSCameraUsageDescription: Ứng dụng cần camera để chụp ảnh checkin.
+        NSPhotoLibraryUsageDescription: Ứng dụng cần thư viện ảnh để chọn ảnh checkin.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_BUNDLE_IDENTIFIER)
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.9"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES

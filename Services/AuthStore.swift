@@ -10,6 +10,10 @@ final class AuthStore: ObservableObject {
     private let tokenKey = "mhm.mobile.auth.token"
     private let api = APIClient()
 
+    /// SyncEngine được gắn từ App root để login xong có thể trigger
+    /// full sync tất cả module (pings/reports/chat/rescue/categories/me).
+    weak var syncEngine: SyncEngine?
+
     var isLoggedIn: Bool { token?.isEmpty == false }
 
     init() {
@@ -25,6 +29,9 @@ final class AuthStore: ObservableObject {
             token = response.token
             user = response.user
             KeychainStore.shared.set(response.token, for: tokenKey)
+
+            // Sau khi login OK, kéo toàn bộ dữ liệu như website.
+            await syncEngine?.sync()
         } catch {
             errorMessage = error.localizedDescription
         }
